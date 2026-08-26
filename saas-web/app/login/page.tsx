@@ -60,7 +60,7 @@ export default function LoginPage() {
       }
 
       const supabase = createClient();
-      const { error: signInError } = await supabase.auth.signInWithPassword({
+      const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -69,7 +69,13 @@ export default function LoginPage() {
         setError(signInError.message);
         setLoading(false);
       } else {
-        router.push("/dashboard");
+        // Check if user has a subscription → onboarding if not
+        const { data: sub } = await supabase
+          .from("subscriptions")
+          .select("id")
+          .eq("user_id", signInData.user!.id)
+          .single();
+        router.push(sub ? "/dashboard" : "/onboarding");
       }
     } catch (err: any) {
       setError(err?.message || "An error occurred during log in.");

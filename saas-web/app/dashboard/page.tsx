@@ -1,23 +1,82 @@
-import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import Link from "next/link";
-import { Zap, LayoutDashboard, Download, CreditCard, User, ArrowRight } from "lucide-react";
+import { Zap, LayoutDashboard, Download, CreditCard, User, ArrowRight, LogOut } from "lucide-react";
+import { createClient } from "@/utils/supabase/server";
 import styles from "./page.module.css";
+import SignOutButton from "./SignOutButton";
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-  description: "Manage your CallRelay subscription, download the Android APK, and access the iPhone PWA.",
-};
+export const dynamic = "force-dynamic";
 
 const SIDEBAR_ITEMS = [
-  { icon: LayoutDashboard, label: "Overview", href: "#overview" },
-  { icon: Download, label: "Downloads", href: "#downloads" },
-  { icon: CreditCard, label: "Billing", href: "#billing" },
-  { icon: User, label: "Account", href: "#account" },
+  { icon: LayoutDashboard, label: "Overview",  href: "#overview" },
+  { icon: Download,        label: "Downloads", href: "#downloads" },
+  { icon: CreditCard,      label: "Billing",   href: "#billing" },
+  { icon: User,            label: "Account",   href: "#account" },
 ];
 
-export default function DashboardPage() {
-  // In production: this data comes from Supabase session + API call
-  const mockSub = { plan: "Pro Monthly", status: "active", daysLeft: 18, renewDate: "Sep 13, 2026", priceLabel: "PKR 2,800/mo" };
+const PLAN_LABELS: Record<string, string> = {
+  free_trial:  "Free Trial",
+  pro_monthly: "Pro Monthly",
+  pro_annual:  "Pro Annual",
+};
+
+function daysRemaining(date: string | null): number {
+  if (!date) return 0;
+  const diff = new Date(date).getTime() - Date.now();
+  return Math.max(0, Math.ceil(diff / (1000 * 60 * 60 * 24)));
+}
+
+function formatDate(date: string | null): string {
+  if (!date) return "—";
+  return new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+}
+
+export default async function DashboardPage() {
+  const supabase = await createClient();
+
+  // Auth guard
+  const { data: { user }, error: userError } = await supabase.auth.getUser();
+  if (userError || !user) redirect("/login");
+
+  // Fetch subscription
+  const { data: subscription } = await supabase
+    .from("subscriptions")
+    .select("*")
+    .eq("user_id", user.id)
+    .single();
+
+  if (!subscription) redirect("/onboarding");
+
+  // Fetch profile
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("full_name, email, avatar_url")
+    .eq("id", user.id)
+    .single();
+
+  // Fetch device pairs count
+  const { count: deviceCount } = await supabase
+    .from("device_pairs")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", user.id)
+    .eq("active", true);
+
+  const planLabel = PLAN_LABELS[subscription.plan] ?? subscription.plan;
+  const endDate   = subscription.trial_ends_at ?? subscription.current_period_end;
+  const daysLeft  = daysRemaining(endDate);
+  const renewDate = formatDate(endDate);
+  const maxPairs  = 1;
+  const pairs     = deviceCount ?? 0;
+
+  const displayName  = profile?.full_name || user.user_metadata?.full_name || "User";
+  const displayEmail = profile?.email     || user.email || "";
+  const avatarLetter = displayName.charAt(0).toUpperCase();
+
+  const priceLabels: Record<string, string> = {
+    free_trial:  "PKR 0 / trial",
+    pro_monthly: "PKR 2,800 / mo",
+    pro_annual:  "PKR 22,000 / yr",
+  };
 
   return (
     <div className={styles.dashPage}>
@@ -34,9 +93,7 @@ export default function DashboardPage() {
               const IconComp = item.icon;
               return (
                 <a key={item.href} href={item.href} className={styles.sidebarLink}>
-                  <span className={styles.sidebarIcon}>
-                    <IconComp size={16} />
-                  </span>
+                  <span className={styles.sidebarIcon}><IconComp size={16} /></span>
                   {item.label}
                 </a>
               );
@@ -44,11 +101,11 @@ export default function DashboardPage() {
           </nav>
         </div>
         <div className={styles.sidebarBottom}>
-          <div className={`badge ${mockSub.status === "active" ? "badge-success" : "badge-warning"}`}>
+          <div className={`badge ${subscription.status === "active" ? "badge-success" : "badge-warning"}`}>
             <span className="status-dot active" />
-            {mockSub.status === "active" ? "Active" : "Expired"}
+            {subscription.status === "active" ? "Active" : "Expired"}
           </div>
-          <p className={styles.sidebarPlan}>{mockSub.plan}</p>
+          <p className={styles.sidebarPlan}>{planLabel}</p>
         </div>
       </aside>
 
@@ -61,25 +118,29 @@ export default function DashboardPage() {
           <div className={styles.statCards}>
             <div className={`card ${styles.statCard}`}>
               <p className={styles.statLabel}>Subscription</p>
-              <p className={styles.statValue}>{mockSub.plan}</p>
-              <span className="badge badge-success">Active</span>
+              <p className={styles.statValue}>{planLabel}</p>
+              <span className={`badge ${subscription.status === "active" ? "badge-success" : "badge-warning"}`}>
+                {subscription.status === "active" ? "Active" : "Expired"}
+              </span>
             </div>
             <div className={`card ${styles.statCard}`}>
               <p className={styles.statLabel}>Days Remaining</p>
-              <p className={styles.statValue}>{mockSub.daysLeft}</p>
-              <p className={styles.statSub}>Renews {mockSub.renewDate}</p>
+              <p className={styles.statValue}>{daysLeft}</p>
+              <p className={styles.statSub}>
+                {subscription.plan === "free_trial" ? "Trial ends" : "Renews"} {renewDate}
+              </p>
             </div>
             <div className={`card ${styles.statCard}`}>
               <p className={styles.statLabel}>Device Pairs</p>
-              <p className={styles.statValue}>1 / 1</p>
-              <p className={styles.statSub}>1 pair included</p>
+              <p className={styles.statValue}>{pairs} / {maxPairs}</p>
+              <p className={styles.statSub}>{maxPairs} pair included</p>
             </div>
           </div>
         </section>
 
         {/* Downloads */}
         <section id="downloads" className={styles.panel}>
-          <h2 className={styles.panelTitle}>Downloads &amp; Apps</h2>
+          <h2 className={styles.panelTitle}>Downloads & Apps</h2>
           <p className={styles.panelSub}>Your subscription gives you access to both the Android APK and the iPhone PWA.</p>
 
           <div className={styles.downloadGrid}>
@@ -91,15 +152,13 @@ export default function DashboardPage() {
                     <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zm-2.5-1C2.67 17 2 17.67 2 18.5v7c0 .83.67 1.5 1.5 1.5S5 26.33 5 25.5v-7C5 17.67 4.33 17 3.5 17zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zM15.53 2.16l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48A5.84 5.84 0 0 0 12 1c-.96 0-1.86.23-2.66.63L7.85.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C6.97 3.26 6 5.01 6 7h12c0-1.99-.97-3.75-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z" fill="#3DDC84"/>
                   </svg>
                 </div>
-                <span className="badge badge-success" style={{ marginTop: 8 }}>v{process.env.APK_CURRENT_VERSION || "1.0.0"}</span>
+                <span className="badge badge-success" style={{ marginTop: 8 }}>v1.0.0</span>
               </div>
               <div className={styles.downloadInfo}>
                 <h3 className={styles.downloadTitle}>Android APK</h3>
                 <p className={styles.downloadDesc}>Install on your Android phone. Set as default dialer to enable call relay.</p>
                 <div className={styles.downloadMeta}>
-                  <span>Android 10+</span>
-                  <span>·</span>
-                  <span>Requires Google Play Services</span>
+                  <span>Android 10+</span><span>·</span><span>Requires Google Play Services</span>
                 </div>
               </div>
               <a href="/api/downloads/apk" className="btn btn-primary btn-full" id="apk-download-btn">
@@ -135,9 +194,7 @@ export default function DashboardPage() {
                 <h3 className={styles.downloadTitle}>iPhone PWA</h3>
                 <p className={styles.downloadDesc}>Open in Safari on your iPhone. No App Store needed — it works as a Progressive Web App.</p>
                 <div className={styles.downloadMeta}>
-                  <span>iOS 15+</span>
-                  <span>·</span>
-                  <span>Safari required</span>
+                  <span>iOS 15+</span><span>·</span><span>Safari required</span>
                 </div>
               </div>
               <a href="#" className="btn btn-outline btn-full" id="pwa-open-btn">
@@ -164,16 +221,20 @@ export default function DashboardPage() {
             <div className={styles.billingInfo}>
               <div>
                 <p className={styles.statLabel}>Current Plan</p>
-                <p className={styles.billingPlan}>{mockSub.plan}</p>
-                <p className={styles.billingPrice}>{mockSub.priceLabel}</p>
+                <p className={styles.billingPlan}>{planLabel}</p>
+                <p className={styles.billingPrice}>{priceLabels[subscription.plan]}</p>
               </div>
               <div>
-                <p className={styles.statLabel}>Next Renewal</p>
-                <p className={styles.billingDate}>{mockSub.renewDate}</p>
+                <p className={styles.statLabel}>
+                  {subscription.plan === "free_trial" ? "Trial Ends" : "Next Renewal"}
+                </p>
+                <p className={styles.billingDate}>{renewDate}</p>
               </div>
               <div>
                 <p className={styles.statLabel}>Status</p>
-                <span className="badge badge-success">Active</span>
+                <span className={`badge ${subscription.status === "active" ? "badge-success" : "badge-warning"}`}>
+                  {subscription.status === "active" ? "Active" : "Expired"}
+                </span>
               </div>
             </div>
             <div className={styles.billingActions}>
@@ -190,15 +251,14 @@ export default function DashboardPage() {
           <h2 className={styles.panelTitle}>Account</h2>
           <div className={`card ${styles.accountCard}`}>
             <div className={styles.accountRow}>
-              <div className={styles.accountAvatar}>U</div>
+              <div className={styles.accountAvatar}>{avatarLetter}</div>
               <div>
-                <p className={styles.accountName}>User Name</p>
-                <p className={styles.accountEmail}>user@example.com</p>
+                <p className={styles.accountName}>{displayName}</p>
+                <p className={styles.accountEmail}>{displayEmail}</p>
               </div>
             </div>
             <div className={styles.accountActions}>
-              <button className="btn btn-ghost btn-sm">Change Password</button>
-              <button className="btn btn-danger btn-sm" id="signout-btn">Sign Out</button>
+              <SignOutButton />
             </div>
           </div>
         </section>

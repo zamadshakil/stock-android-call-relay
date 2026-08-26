@@ -1,0 +1,242 @@
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.bgOrb {
+  position: fixed;
+  top: -200px;
+  right: -200px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, hsla(258, 90%, 66%, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.header {
+  position: relative;
+  z-index: 1;
+  padding: 20px 32px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+  transition: color 0.2s;
+}
+.backBtn:hover { color: var(--text); }
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+.logo svg { color: var(--accent); }
+.logo span { color: var(--accent); }
+
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text);
+  margin: 12px 0 0;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+}
+
+/* Summary */
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+.summaryRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.summaryLabel {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+.summaryValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.summaryPrice {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* Error */
+.errorBanner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: hsl(0 80% 50% / 0.1);
+  border: 1px solid hsl(0 80% 50% / 0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  color: hsl(0 80% 65%);
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+
+/* Form */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+
+.input {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px hsl(258 90% 66% / 0.15);
+}
+.input::placeholder { color: var(--text-muted); opacity: 0.6; }
+
+.inputIcon {
+  position: relative;
+}
+.inputIconSvg {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+.inputWithIcon {
+  padding-left: 38px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.payBtn {
+  margin-top: 8px;
+  gap: 8px;
+}
+
+.secureNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 16px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  opacity: 0.7;
+}
+
+/* Success screen */
+.successScreen {
+  text-align: center;
+  padding: 48px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+.successIcon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: hsl(142 70% 45% / 0.15);
+  border: 1px solid hsl(142 70% 45% / 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: hsl(142 70% 55%);
+  animation: pulse 1.5s ease infinite;
+}
+.successTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+.successSub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  max-width: 320px;
+}
+.successLoader {
+  color: var(--accent);
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(142 70% 45% / 0.3); }
+  50% { box-shadow: 0 0 0 12px hsl(142 70% 45% / 0); }
+}

@@ -81,7 +81,8 @@ export default function SignupPage() {
         setError(signUpError.message);
         setLoading(false);
       } else {
-        router.push("/dashboard");
+        // New user → always go to onboarding to pick a plan
+        router.push("/onboarding");
       }
     } catch (err: any) {
       setError(err?.message || "An error occurred during registration.");
