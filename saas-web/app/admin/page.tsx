@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Zap, Users, CreditCard, Clock, Coins, LayoutDashboard, ArrowLeft, ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -9,10 +10,10 @@ export const metadata: Metadata = {
 
 // Mock data — replaced with real Supabase queries in production
 const STATS = [
-  { label: "Total Users", value: "248", icon: "👥", change: "+12 this week" },
-  { label: "Active Subscriptions", value: "184", icon: "💳", change: "74% conversion" },
-  { label: "Trial Users", value: "36", icon: "⏱️", change: "7-day trials" },
-  { label: "Revenue (PKR)", value: "515,200", icon: "💰", change: "This month" },
+  { label: "Total Users", value: "248", icon: Users, change: "+12 this week" },
+  { label: "Active Subscriptions", value: "184", icon: CreditCard, change: "74% conversion" },
+  { label: "Trial Users", value: "36", icon: Clock, change: "7-day trials" },
+  { label: "Revenue (PKR)", value: "515,200", icon: Coins, change: "This month" },
 ];
 
 const RECENT_USERS = [
@@ -30,24 +31,34 @@ const STATUS_BADGE: Record<string, string> = {
   past_due: "badge-warning",
 };
 
+const SIDEBAR_ITEMS = [
+  { icon: LayoutDashboard, label: "Overview", href: "/admin" },
+  { icon: Users, label: "Users", href: "/admin/users" },
+  { icon: CreditCard, label: "Subscriptions", href: "/admin/subscriptions" },
+];
+
 export default function AdminPage() {
   return (
     <div className={styles.adminPage}>
       <aside className={styles.sidebar}>
-        <Link href="/" className={styles.sidebarLogo}>⚡ Call<span>Relay</span></Link>
+        <Link href="/" className={styles.sidebarLogo}>
+          <Zap size={18} className="text-accent inline-block mr-1" />
+          Call<span>Relay</span>
+        </Link>
         <p className={styles.adminLabel}>Admin Panel</p>
         <nav className={styles.sidebarNav}>
-          {[
-            { icon: "⊞", label: "Overview", href: "/admin" },
-            { icon: "👥", label: "Users", href: "/admin/users" },
-            { icon: "💳", label: "Subscriptions", href: "/admin/subscriptions" },
-          ].map((item) => (
-            <Link key={item.href} href={item.href} className={styles.sidebarLink}>
-              <span>{item.icon}</span> {item.label}
-            </Link>
-          ))}
+          {SIDEBAR_ITEMS.map((item) => {
+            const IconComp = item.icon;
+            return (
+              <Link key={item.href} href={item.href} className={styles.sidebarLink}>
+                <IconComp size={16} /> {item.label}
+              </Link>
+            );
+          })}
         </nav>
-        <Link href="/dashboard" className={styles.backLink}>← Back to Dashboard</Link>
+        <Link href="/dashboard" className={styles.backLink}>
+          <ArrowLeft size={14} className="inline-block mr-1" /> Back to Dashboard
+        </Link>
       </aside>
 
       <main className={styles.adminMain}>
@@ -58,21 +69,28 @@ export default function AdminPage() {
 
         {/* Stats */}
         <div className={styles.statsGrid}>
-          {STATS.map((s, i) => (
-            <div key={i} className={`card ${styles.statCard}`}>
-              <div className={styles.statIcon}>{s.icon}</div>
-              <p className={styles.statValue}>{s.value}</p>
-              <p className={styles.statLabel}>{s.label}</p>
-              <p className={styles.statChange}>{s.change}</p>
-            </div>
-          ))}
+          {STATS.map((s, i) => {
+            const StatIcon = s.icon;
+            return (
+              <div key={i} className={`card ${styles.statCard}`}>
+                <div className={styles.statIcon}>
+                  <StatIcon size={20} className="text-accent" />
+                </div>
+                <p className={styles.statValue}>{s.value}</p>
+                <p className={styles.statLabel}>{s.label}</p>
+                <p className={styles.statChange}>{s.change}</p>
+              </div>
+            );
+          })}
         </div>
 
         {/* Recent users */}
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <h2 className={styles.sectionTitle}>Recent Sign-ups</h2>
-            <Link href="/admin/users" className="btn btn-ghost btn-sm">View All →</Link>
+            <Link href="/admin/users" className="btn btn-ghost btn-sm">
+              View All <ArrowRight size={14} />
+            </Link>
           </div>
           <div className="table-wrap">
             <table>

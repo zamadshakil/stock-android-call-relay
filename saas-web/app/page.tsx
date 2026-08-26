@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { 
+  Radio, Shield, Mic, Smartphone, Apple, Zap, Sparkles, 
+  Check, CheckCircle2, X, PhoneIncoming, ShieldCheck, 
+  HardDriveDownload, RotateCcw, ArrowRight 
+} from "lucide-react";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -8,15 +13,15 @@ export const metadata: Metadata = {
 };
 
 const FEATURES_PREVIEW = [
-  { icon: "📡", title: "Real-time Relay", desc: "Sub-second audio bridging over LiveKit WebRTC." },
-  { icon: "🔒", title: "End-to-End Encrypted", desc: "P-256 key pairs. Zero audio storage, ever." },
-  { icon: "🎤", title: "Three Relay Modes", desc: "Listen, Talk, or Full Duplex — your choice." },
+  { icon: Radio, title: "Real-time Relay", desc: "Sub-second audio bridging over LiveKit WebRTC." },
+  { icon: Shield, title: "End-to-End Encrypted", desc: "P-256 key pairs. Zero audio storage, ever." },
+  { icon: Mic, title: "Three Relay Modes", desc: "Listen, Talk, or Full Duplex — your choice." },
 ];
 
 const STEPS = [
-  { num: "01", icon: "🤖", title: "Install APK on Android", desc: "Download and install the CallRelay APK on your Android phone. Set it as your default dialer." },
-  { num: "02", icon: "🍎", title: "Open PWA on iPhone", desc: "Open CallRelay in Safari on your iPhone. No App Store download needed — it works as a PWA." },
-  { num: "03", icon: "⚡", title: "Calls Relay Seamlessly", desc: "When a call comes in, your iPhone gets an instant push notification and audio bridges in real-time." },
+  { num: "01", icon: Smartphone, title: "Install APK on Android", desc: "Download and install the CallRelay APK on your Android phone. Set it as your default dialer." },
+  { num: "02", icon: Apple, title: "Open PWA on iPhone", desc: "Open CallRelay in Safari on your iPhone. No App Store download needed — it works as a PWA." },
+  { num: "03", icon: Zap, title: "Calls Relay Seamlessly", desc: "When a call comes in, your iPhone gets an instant push notification and audio bridges in real-time." },
 ];
 
 export default function HomePage() {
@@ -30,7 +35,7 @@ export default function HomePage() {
         <div className="container">
           <div className={styles.heroContent}>
             <div className={`badge badge-accent ${styles.heroBadge}`}>
-              <span>✦</span> Now in Beta — 7-Day Free Trial
+              <Sparkles size={12} /> Now in Beta — 7-Day Free Trial
             </div>
 
             <h1 className={styles.heroTitle}>
@@ -44,17 +49,17 @@ export default function HomePage() {
 
             <div className={styles.heroCtas}>
               <Link href="/signup" className="btn btn-primary btn-lg">
-                Start Free Trial — PKR 0
+                Start Free Trial — PKR 0 <ArrowRight size={16} />
               </Link>
               <Link href="/features" className="btn btn-outline btn-lg">
-                See How It Works →
+                See How It Works <ArrowRight size={16} />
               </Link>
             </div>
 
             <div className={styles.heroStats}>
-              <span>✓ 7-day free trial</span>
-              <span>✓ No SIM change needed</span>
-              <span>✓ Cancel anytime</span>
+              <span><CheckCircle2 size={14} className="text-accent" /> 7-day free trial</span>
+              <span><CheckCircle2 size={14} className="text-accent" /> No SIM change needed</span>
+              <span><CheckCircle2 size={14} className="text-accent" /> Cancel anytime</span>
             </div>
           </div>
 
@@ -64,15 +69,17 @@ export default function HomePage() {
               <div className={styles.phoneScreen}>
                 <div className={styles.phoneStatusBar}>
                   <span>9:41</span>
-                  <span>📶 SIM</span>
+                  <span>SIM</span>
                 </div>
                 <div className={styles.callCard}>
-                  <div className={styles.callAvatar}>📞</div>
+                  <div className={styles.callAvatar}>
+                    <PhoneIncoming size={18} />
+                  </div>
                   <p className={styles.callName}>Incoming Call</p>
                   <p className={styles.callNumber}>+92 300 1234567</p>
                   <div className={styles.callButtons}>
-                    <span className={styles.callAccept}>✓</span>
-                    <span className={styles.callDecline}>✗</span>
+                    <span className={styles.callAccept}><Check size={14} /></span>
+                    <span className={styles.callDecline}><X size={14} /></span>
                   </div>
                 </div>
               </div>
@@ -83,17 +90,21 @@ export default function HomePage() {
               <div className={styles.wave} />
               <div className={styles.wave} />
               <div className={styles.wave} />
-              <div className={styles.waveArrow}>⚡</div>
+              <div className={styles.waveArrow}>
+                <Zap size={16} className="text-accent" />
+              </div>
             </div>
 
             <div className={styles.phoneRight}>
               <div className={`${styles.phoneScreen} ${styles.iphoneScreen}`}>
                 <div className={styles.phoneStatusBar}>
                   <span>9:41</span>
-                  <span>📶 WiFi</span>
+                  <span>WiFi</span>
                 </div>
                 <div className={`${styles.callCard} ${styles.callCardActive}`}>
-                  <div className={`${styles.callAvatar} ${styles.callAvatarActive}`}>🎤</div>
+                  <div className={`${styles.callAvatar} ${styles.callAvatarActive}`}>
+                    <Mic size={18} />
+                  </div>
                   <p className={styles.callName}>Relaying Call</p>
                   <p className={styles.callNumber}>Full Duplex Active</p>
                   <div className={styles.audioBars}>
@@ -113,15 +124,15 @@ export default function HomePage() {
       <section className={styles.trustBar}>
         <div className="container">
           <div className={styles.trustItems}>
-            <span>🛡️ End-to-end encrypted</span>
+            <span className="inline-flex items-center gap-2"><ShieldCheck size={16} className="text-accent" /> End-to-end encrypted</span>
             <span className={styles.trustDot} />
-            <span>📵 No audio stored</span>
+            <span className="inline-flex items-center gap-2"><HardDriveDownload size={16} className="text-accent" /> No audio stored</span>
             <span className={styles.trustDot} />
-            <span>🔄 Cancel anytime</span>
+            <span className="inline-flex items-center gap-2"><RotateCcw size={16} className="text-accent" /> Cancel anytime</span>
             <span className={styles.trustDot} />
-            <span>📱 All Android phones</span>
+            <span className="inline-flex items-center gap-2"><Smartphone size={16} className="text-accent" /> All Android phones</span>
             <span className={styles.trustDot} />
-            <span>🍎 No iPhone app install</span>
+            <span className="inline-flex items-center gap-2"><Apple size={16} className="text-accent" /> No iPhone app install</span>
           </div>
         </div>
       </section>
@@ -136,15 +147,24 @@ export default function HomePage() {
           </div>
 
           <div className={styles.steps}>
-            {STEPS.map((step, i) => (
-              <div key={i} className={styles.step}>
-                <div className={styles.stepNum}>{step.num}</div>
-                <div className={styles.stepIcon}>{step.icon}</div>
-                <h3 className={styles.stepTitle}>{step.title}</h3>
-                <p className={styles.stepDesc}>{step.desc}</p>
-                {i < STEPS.length - 1 && <div className={styles.stepArrow}>→</div>}
-              </div>
-            ))}
+            {STEPS.map((step, i) => {
+              const IconComp = step.icon;
+              return (
+                <div key={i} className={styles.step}>
+                  <div className={styles.stepNum}>{step.num}</div>
+                  <div className={styles.stepIcon}>
+                    <IconComp size={24} className="text-accent" />
+                  </div>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <p className={styles.stepDesc}>{step.desc}</p>
+                  {i < STEPS.length - 1 && (
+                    <div className={styles.stepArrow}>
+                      <ArrowRight size={18} />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -159,18 +179,23 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-3">
-            {FEATURES_PREVIEW.map((f, i) => (
-              <div key={i} className="card">
-                <div className={styles.featureIcon}>{f.icon}</div>
-                <h3 className={styles.featureTitle}>{f.title}</h3>
-                <p className={styles.featureDesc}>{f.desc}</p>
-              </div>
-            ))}
+            {FEATURES_PREVIEW.map((f, i) => {
+              const IconComp = f.icon;
+              return (
+                <div key={i} className="card">
+                  <div className={styles.featureIcon}>
+                    <IconComp size={24} className="text-accent" />
+                  </div>
+                  <h3 className={styles.featureTitle}>{f.title}</h3>
+                  <p className={styles.featureDesc}>{f.desc}</p>
+                </div>
+              );
+            })}
           </div>
 
           <div className={styles.featuresCta}>
             <Link href="/features" className="btn btn-outline">
-              See All Features →
+              See All Features <ArrowRight size={16} />
             </Link>
           </div>
         </div>
@@ -199,7 +224,9 @@ export default function HomePage() {
             </div>
 
             <div className={`card ${styles.planCard} ${styles.planCardFeatured}`}>
-              <div className={`badge badge-primary ${styles.popularBadge}`}>Most Popular</div>
+              <div className={`badge badge-primary ${styles.popularBadge}`}>
+                <Sparkles size={12} /> Most Popular
+              </div>
               <p className={styles.planName}>Pro Monthly</p>
               <p className={styles.planPrice}>PKR 2,800</p>
               <p className={styles.planPeriod}>per month</p>
@@ -208,7 +235,9 @@ export default function HomePage() {
                 <li>Email support</li>
                 <li>1 device pair</li>
               </ul>
-              <Link href="/signup" className="btn btn-primary btn-full">Get Pro →</Link>
+              <Link href="/signup" className="btn btn-primary btn-full">
+                Get Pro <ArrowRight size={16} />
+              </Link>
             </div>
 
             <div className={`card ${styles.planCard}`}>
@@ -234,7 +263,7 @@ export default function HomePage() {
             <h2 className={styles.ctaTitle}>Ready to bridge your devices?</h2>
             <p className={styles.ctaSub}>Start your 7-day free trial today. No credit card required.</p>
             <Link href="/signup" className="btn btn-primary btn-lg">
-              Get Started Free →
+              Get Started Free <ArrowRight size={18} />
             </Link>
           </div>
         </div>

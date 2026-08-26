@@ -415,17 +415,15 @@ tr:hover td { background: var(--surface-hover); }
   font-size: 0.9375rem;
 }
 .check-list li::before {
-  content: '✓';
-  width: 20px;
-  height: 20px;
+  content: '';
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
   background: var(--primary-soft);
-  color: #a78bfa;
-  font-size: 11px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid var(--primary-glow);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%23a78bfa' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
   flex-shrink: 0;
 }
 

@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect, useCallback } from "react";
+import { Zap, ArrowRight } from "lucide-react";
 import styles from "./Navbar.module.css";
 
 const NAV_LINKS = [
@@ -36,7 +37,9 @@ export default function Navbar() {
         <div className={`container ${styles.inner}`}>
           {/* Logo */}
           <Link href="/" className={styles.logo} onClick={() => setMenuOpen(false)}>
-            <span className={styles.logoIcon}>⚡</span>
+            <span className={styles.logoIcon}>
+              <Zap className="w-5 h-5 text-accent" size={20} />
+            </span>
             <span className={styles.logoText}>Call<span className={styles.logoAccent}>Relay</span></span>
           </Link>
 
@@ -57,7 +60,9 @@ export default function Navbar() {
           {/* CTA buttons */}
           <div className={styles.cta}>
             <Link href="/login" className="btn btn-ghost btn-sm">Log In</Link>
-            <Link href="/signup" className="btn btn-primary btn-sm">Get Started →</Link>
+            <Link href="/signup" className="btn btn-primary btn-sm">
+              Get Started <ArrowRight size={14} />
+            </Link>
           </div>
 
           {/* Hamburger */}
@@ -84,7 +89,9 @@ export default function Navbar() {
         </ul>
         <div className={styles.drawerCta}>
           <Link href="/login" className="btn btn-ghost btn-full" onClick={() => setMenuOpen(false)}>Log In</Link>
-          <Link href="/signup" className="btn btn-primary btn-full" onClick={() => setMenuOpen(false)}>Get Started →</Link>
+          <Link href="/signup" className="btn btn-primary btn-full" onClick={() => setMenuOpen(false)}>
+            Get Started <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
 

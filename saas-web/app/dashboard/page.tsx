@@ -1,11 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Zap, LayoutDashboard, Download, CreditCard, User, ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
   title: "Dashboard",
   description: "Manage your CallRelay subscription, download the Android APK, and access the iPhone PWA.",
 };
+
+const SIDEBAR_ITEMS = [
+  { icon: LayoutDashboard, label: "Overview", href: "#overview" },
+  { icon: Download, label: "Downloads", href: "#downloads" },
+  { icon: CreditCard, label: "Billing", href: "#billing" },
+  { icon: User, label: "Account", href: "#account" },
+];
 
 export default function DashboardPage() {
   // In production: this data comes from Supabase session + API call
@@ -17,19 +25,22 @@ export default function DashboardPage() {
       {/* ─── SIDEBAR ─── */}
       <aside className={styles.sidebar}>
         <div className={styles.sidebarTop}>
-          <Link href="/" className={styles.sidebarLogo}>⚡ Call<span>Relay</span></Link>
+          <Link href="/" className={styles.sidebarLogo}>
+            <Zap size={18} className="text-accent inline-block mr-1" />
+            Call<span>Relay</span>
+          </Link>
           <nav className={styles.sidebarNav}>
-            {[
-              { icon: "⊞", label: "Overview", href: "#overview" },
-              { icon: "⬇", label: "Downloads", href: "#downloads" },
-              { icon: "💳", label: "Billing", href: "#billing" },
-              { icon: "👤", label: "Account", href: "#account" },
-            ].map((item) => (
-              <a key={item.href} href={item.href} className={styles.sidebarLink}>
-                <span className={styles.sidebarIcon}>{item.icon}</span>
-                {item.label}
-              </a>
-            ))}
+            {SIDEBAR_ITEMS.map((item) => {
+              const IconComp = item.icon;
+              return (
+                <a key={item.href} href={item.href} className={styles.sidebarLink}>
+                  <span className={styles.sidebarIcon}>
+                    <IconComp size={16} />
+                  </span>
+                  {item.label}
+                </a>
+              );
+            })}
           </nav>
         </div>
         <div className={styles.sidebarBottom}>
@@ -68,7 +79,7 @@ export default function DashboardPage() {
 
         {/* Downloads */}
         <section id="downloads" className={styles.panel}>
-          <h2 className={styles.panelTitle}>Downloads & Apps</h2>
+          <h2 className={styles.panelTitle}>Downloads &amp; Apps</h2>
           <p className={styles.panelSub}>Your subscription gives you access to both the Android APK and the iPhone PWA.</p>
 
           <div className={styles.downloadGrid}>
@@ -92,7 +103,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <a href="/api/downloads/apk" className="btn btn-primary btn-full" id="apk-download-btn">
-                ⬇ Download APK
+                <Download size={16} /> Download APK
               </a>
               <details className={styles.setupDetails}>
                 <summary>Setup instructions</summary>
@@ -130,7 +141,7 @@ export default function DashboardPage() {
                 </div>
               </div>
               <a href="#" className="btn btn-outline btn-full" id="pwa-open-btn">
-                🍎 Open iPhone App →
+                Open iPhone App <ArrowRight size={16} />
               </a>
               <details className={styles.setupDetails}>
                 <summary>Setup instructions</summary>
@@ -167,7 +178,9 @@ export default function DashboardPage() {
             </div>
             <div className={styles.billingActions}>
               <Link href="/pricing" className="btn btn-outline btn-sm">Upgrade Plan</Link>
-              <button className="btn btn-ghost btn-sm" id="manage-billing-btn">Manage Billing →</button>
+              <button className="btn btn-ghost btn-sm" id="manage-billing-btn">
+                Manage Billing <ArrowRight size={14} />
+              </button>
             </div>
           </div>
         </section>

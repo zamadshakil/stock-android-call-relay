@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { 
+  Radio, Cloud, Bell, Database, ShieldAlert, Clock, Key, Lock, 
+  Trash2, EyeOff, AlertOctagon, Users, Volume2, FlaskConical, Globe, 
+  Smartphone, Apple, Frown, ArrowDown, Zap, Mail, ArrowRight 
+} from "lucide-react";
 import styles from "./page.module.css";
 
 export const metadata: Metadata = {
@@ -8,27 +13,27 @@ export const metadata: Metadata = {
 };
 
 const TECH_STACK = [
-  { icon: "🔗", name: "LiveKit WebRTC", desc: "Real-time audio relay infrastructure" },
-  { icon: "☁️", name: "Cloudflare Workers", desc: "Zero-latency global edge API" },
-  { icon: "🔔", name: "Firebase Cloud Messaging", desc: "Instant push notification delivery" },
-  { icon: "🗄️", name: "Cloudflare D1", desc: "Lightweight SQLite at the edge" },
+  { icon: Radio, name: "LiveKit WebRTC", desc: "Real-time audio relay infrastructure" },
+  { icon: Cloud, name: "Cloudflare Workers", desc: "Zero-latency global edge API" },
+  { icon: Bell, name: "Firebase Cloud Messaging", desc: "Instant push notification delivery" },
+  { icon: Database, name: "Cloudflare D1", desc: "Lightweight SQLite at the edge" },
 ];
 
 const PRIVACY_POINTS = [
-  { icon: "🚫", text: "No call audio is ever recorded or stored" },
-  { icon: "⏱️", text: "Call metadata expires automatically after 24 hours" },
-  { icon: "🔑", text: "Each device has a unique cryptographic key pair (P-256)" },
-  { icon: "🔒", text: "Enrollment requires an invite — no open registration" },
-  { icon: "🧹", text: "Request nonces expire after 10 minutes" },
-  { icon: "👁️", text: "No analytics, no tracking, no ad networks" },
+  { icon: ShieldAlert, text: "No call audio is ever recorded or stored" },
+  { icon: Clock, text: "Call metadata expires automatically after 24 hours" },
+  { icon: Key, text: "Each device has a unique cryptographic key pair (P-256)" },
+  { icon: Lock, text: "Enrollment requires an invite — no open registration" },
+  { icon: Trash2, text: "Request nonces expire after 10 minutes" },
+  { icon: EyeOff, text: "No analytics, no tracking, no ad networks" },
 ];
 
 const LIMITATIONS = [
-  { icon: "🚨", text: "Not for emergency calls (911, 15, 115, etc.)" },
-  { icon: "🤝", text: "Requires explicit consent from all call participants" },
-  { icon: "📣", text: "Android uses acoustic relay — speaker and mic are audible in the room" },
-  { icon: "⚗️", text: "Experimental — full duplex quality depends on your specific Android handset" },
-  { icon: "🌐", text: "Both devices require an active internet connection" },
+  { icon: AlertOctagon, text: "Not for emergency calls (911, 15, 115, etc.)" },
+  { icon: Users, text: "Requires explicit consent from all call participants" },
+  { icon: Volume2, text: "Android uses acoustic relay — speaker and mic are audible in the room" },
+  { icon: FlaskConical, text: "Experimental — full duplex quality depends on your specific Android handset" },
+  { icon: Globe, text: "Both devices require an active internet connection" },
 ];
 
 export default function AboutPage() {
@@ -86,20 +91,22 @@ export default function AboutPage() {
               <div className={styles.problemBox}>
                 <p className={styles.problemLabel}>The Problem</p>
                 <div className={styles.problemItem}>
-                  <span>📱</span>
+                  <Smartphone size={18} className="text-accent" />
                   <span>Work SIM on Android — can&apos;t easily use iPhone</span>
                 </div>
                 <div className={styles.problemItem}>
-                  <span>🍎</span>
+                  <Apple size={18} className="text-accent" />
                   <span>iPhone is the preferred daily device</span>
                 </div>
                 <div className={styles.problemItem}>
-                  <span>😤</span>
+                  <Frown size={18} className="text-warning" />
                   <span>Carrying two phones everywhere is frustrating</span>
                 </div>
-                <div className={styles.problemArrow}>↓</div>
+                <div className={styles.problemArrow}>
+                  <ArrowDown size={18} className="text-accent" />
+                </div>
                 <div className={styles.solutionBox}>
-                  <span>⚡</span>
+                  <Zap size={20} className="text-accent" />
                   <p className={styles.solutionText}>CallRelay bridges both devices seamlessly</p>
                 </div>
               </div>
@@ -117,13 +124,18 @@ export default function AboutPage() {
             <p className="section-subtitle">We use proven, production-grade infrastructure. No custom media servers — just best-in-class tools.</p>
           </div>
           <div className={styles.techGrid}>
-            {TECH_STACK.map((t, i) => (
-              <div key={i} className="card">
-                <div className={styles.techIcon}>{t.icon}</div>
-                <h3 className={styles.techName}>{t.name}</h3>
-                <p className={styles.techDesc}>{t.desc}</p>
-              </div>
-            ))}
+            {TECH_STACK.map((t, i) => {
+              const IconComp = t.icon;
+              return (
+                <div key={i} className="card">
+                  <div className={styles.techIcon}>
+                    <IconComp size={24} className="text-accent" />
+                  </div>
+                  <h3 className={styles.techName}>{t.name}</h3>
+                  <p className={styles.techDesc}>{t.desc}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -140,12 +152,17 @@ export default function AboutPage() {
               </p>
             </div>
             <ul className={styles.privacyList}>
-              {PRIVACY_POINTS.map((p, i) => (
-                <li key={i} className={styles.privacyItem}>
-                  <span className={styles.privacyIcon}>{p.icon}</span>
-                  <span>{p.text}</span>
-                </li>
-              ))}
+              {PRIVACY_POINTS.map((p, i) => {
+                const IconComp = p.icon;
+                return (
+                  <li key={i} className={styles.privacyItem}>
+                    <span className={styles.privacyIcon}>
+                      <IconComp size={18} className="text-accent" />
+                    </span>
+                    <span>{p.text}</span>
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </div>
@@ -160,12 +177,17 @@ export default function AboutPage() {
             <p className="section-subtitle">We believe in transparency. Here&apos;s what CallRelay cannot do.</p>
           </div>
           <div className={styles.limitsList}>
-            {LIMITATIONS.map((l, i) => (
-              <div key={i} className={styles.limitItem}>
-                <span className={styles.limitIcon}>{l.icon}</span>
-                <span>{l.text}</span>
-              </div>
-            ))}
+            {LIMITATIONS.map((l, i) => {
+              const IconComp = l.icon;
+              return (
+                <div key={i} className={styles.limitItem}>
+                  <span className={styles.limitIcon}>
+                    <IconComp size={18} className="text-warning" />
+                  </span>
+                  <span>{l.text}</span>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -177,7 +199,7 @@ export default function AboutPage() {
             <h2 className={styles.contactTitle}>Have Questions?</h2>
             <p className={styles.contactSub}>We&apos;re a small team and we respond to every message personally.</p>
             <a href="mailto:support@callrelay.app" className="btn btn-primary btn-lg">
-              ✉️ Contact Support
+              <Mail size={16} /> Contact Support
             </a>
             <p className={styles.contactNote}>Or start with our <Link href="/pricing" className={styles.contactLink}>free trial</Link> — no commitment required.</p>
           </div>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Zap } from "lucide-react";
 import styles from "./Footer.module.css";
 
 const LINKS = {
@@ -23,7 +24,7 @@ export default function Footer() {
       <div className={`container ${styles.inner}`}>
         <div className={styles.brand}>
           <Link href="/" className={styles.logo}>
-            <span>⚡</span>
+            <Zap size={18} className="text-accent" />
             <span>Call<span className={styles.accent}>Relay</span></span>
           </Link>
           <p className={styles.tagline}>

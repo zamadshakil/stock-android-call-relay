@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { useState } from "react";
+import { Sparkles, ShieldCheck, Check, Minus, ChevronDown, ArrowRight } from "lucide-react";
 import styles from "./page.module.css";
 
 const PLANS = {
@@ -22,7 +23,7 @@ const PLANS = {
       period: "per month",
       desc: "Everything you need for ongoing relay access.",
       features: ["Everything in Free Trial", "Email support", "1 device pair", "All relay modes", "Priority bug fixes"],
-      cta: "Get Pro →",
+      cta: "Get Pro",
       href: "/signup",
       featured: true,
     },
@@ -32,7 +33,7 @@ const PLANS = {
       period: "per year",
       desc: "Best value — save 34% vs monthly.",
       features: ["Everything in Pro Monthly", "Priority email support", "1 device pair", "All relay modes", "Early access to new features"],
-      cta: "Get Annual →",
+      cta: "Get Annual",
       href: "/signup",
       featured: false,
     },
@@ -54,7 +55,7 @@ const PLANS = {
       period: "per year · save 34%",
       desc: "Best value — the full experience.",
       features: ["Everything in Free Trial", "Priority email support", "1 device pair", "All relay modes", "Early access to new features"],
-      cta: "Get Annual →",
+      cta: "Get Annual",
       href: "/signup",
       featured: true,
     },
@@ -140,7 +141,11 @@ export default function PricingPage() {
           <div className={styles.plans}>
             {plans.map((plan, i) => (
               <div key={i} className={`card ${styles.planCard} ${plan.featured ? styles.featured : ""}`}>
-                {plan.featured && <div className={`badge badge-primary ${styles.popularBadge}`}>✦ Most Popular</div>}
+                {plan.featured && (
+                  <div className={`badge badge-primary ${styles.popularBadge}`}>
+                    <Sparkles size={12} /> Most Popular
+                  </div>
+                )}
                 <div className={styles.planHeader}>
                   <p className={styles.planName}>{plan.name}</p>
                   <p className={styles.planDesc}>{plan.desc}</p>
@@ -153,12 +158,15 @@ export default function PricingPage() {
                   {plan.features.map((f, fi) => <li key={fi}>{f}</li>)}
                 </ul>
                 <Link href={plan.href} className={`btn btn-full ${plan.featured ? "btn-primary" : "btn-outline"}`}>
-                  {plan.cta}
+                  {plan.cta} <ArrowRight size={16} />
                 </Link>
               </div>
             ))}
           </div>
-          <p className={styles.guarantee}>🔒 30-day money-back guarantee on all paid plans. No questions asked.</p>
+          <p className={styles.guarantee}>
+            <ShieldCheck size={16} className="text-accent inline-block mr-1.5 align-text-bottom" />
+            30-day money-back guarantee on all paid plans. No questions asked.
+          </p>
         </div>
       </section>
 
@@ -186,7 +194,9 @@ export default function PricingPage() {
                     {[trial, monthly, annual].map((val, vi) => (
                       <td key={vi} style={{ textAlign: "center" }}>
                         {typeof val === "boolean"
-                          ? val ? <span className={styles.check}>✓</span> : <span className={styles.cross}>–</span>
+                          ? val 
+                            ? <Check size={16} className="text-success inline-block" /> 
+                            : <Minus size={16} className="text-muted inline-block" />
                           : val}
                       </td>
                     ))}
@@ -210,7 +220,10 @@ export default function PricingPage() {
               <div key={i} className={`${styles.faqItem} ${openFaq === i ? styles.faqOpen : ""}`}>
                 <button className={styles.faqQ} onClick={() => setOpenFaq(openFaq === i ? null : i)}>
                   <span>{faq.q}</span>
-                  <span className={styles.faqChevron}>{openFaq === i ? "−" : "+"}</span>
+                  <ChevronDown 
+                    size={18} 
+                    className={`text-accent transition-transform duration-200 ${openFaq === i ? "rotate-180" : ""}`} 
+                  />
                 </button>
                 {openFaq === i && <p className={styles.faqA}>{faq.a}</p>}
               </div>
@@ -225,7 +238,9 @@ export default function PricingPage() {
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>Start your free trial today</h2>
             <p className={styles.ctaSub}>7 days free. No credit card. Cancel anytime.</p>
-            <Link href="/signup" className="btn btn-primary btn-lg">Get Started Free →</Link>
+            <Link href="/signup" className="btn btn-primary btn-lg">
+              Get Started Free <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
