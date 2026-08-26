@@ -1,0 +1,282 @@
+.page { min-height: 100vh; }
+
+/* ── Hero ── */
+.hero {
+  position: relative;
+  padding: 100px 0 80px;
+  overflow: hidden;
+}
+.heroOrb1 {
+  position: absolute;
+  width: 700px; height: 700px;
+  top: -200px; left: -200px;
+  background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.heroOrb2 {
+  position: absolute;
+  width: 500px; height: 500px;
+  top: 100px; right: -100px;
+  background: radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero .container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.heroContent { display: flex; flex-direction: column; gap: 24px; }
+.heroBadge { margin-bottom: 8px; align-self: flex-start; }
+.heroTitle {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.heroSub {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  max-width: 480px;
+}
+.heroCtas { display: flex; gap: 16px; flex-wrap: wrap; }
+.heroStats {
+  display: flex;
+  gap: 24px;
+  font-size: 0.8125rem;
+  color: var(--text-faint);
+  flex-wrap: wrap;
+}
+
+/* ── Hero Visual (phones) ── */
+.heroVisual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  position: relative;
+}
+.phoneLeft, .phoneRight { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.phoneScreen {
+  width: 160px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 12px;
+  box-shadow: var(--shadow-lg);
+}
+.iphoneScreen { border-color: rgba(124,58,237,0.4); box-shadow: var(--shadow-lg), 0 0 30px rgba(124,58,237,0.2); }
+.phoneStatusBar {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: var(--text-faint);
+  margin-bottom: 10px;
+}
+.callCard {
+  background: var(--surface-2);
+  border-radius: 12px;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.callCardActive { background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); }
+.callAvatar {
+  font-size: 1.5rem;
+  width: 44px; height: 44px;
+  background: var(--surface);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.callAvatarActive { background: rgba(124,58,237,0.3); animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(124,58,237,0.4); } 50% { box-shadow: 0 0 0 8px rgba(124,58,237,0); } }
+.callName { font-size: 0.65rem; font-weight: 600; color: var(--text); }
+.callNumber { font-size: 0.55rem; color: var(--text-faint); }
+.callButtons { display: flex; gap: 12px; margin-top: 4px; }
+.callAccept { width: 28px; height: 28px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #fff; }
+.callDecline { width: 28px; height: 28px; background: var(--danger); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; color: #fff; }
+.phoneLabel { font-size: 0.7rem; color: var(--text-faint); text-align: center; }
+
+/* Audio bars */
+.audioBars { display: flex; gap: 3px; align-items: flex-end; height: 24px; margin-top: 6px; }
+.audioBar {
+  width: 4px;
+  background: var(--primary);
+  border-radius: 2px;
+  animation: barAnim 0.8s ease-in-out infinite alternate;
+  animation-delay: var(--delay);
+  height: var(--h);
+}
+@keyframes barAnim { from { transform: scaleY(0.3); } to { transform: scaleY(1); } }
+
+/* Signal waves */
+.signalWaves {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+.wave {
+  height: 2px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 1px;
+  animation: waveAnim 1.5s ease-in-out infinite;
+}
+.wave:nth-child(1) { width: 48px; animation-delay: 0s; }
+.wave:nth-child(2) { width: 36px; animation-delay: 0.15s; }
+.wave:nth-child(3) { width: 24px; animation-delay: 0.3s; }
+@keyframes waveAnim {
+  0%, 100% { opacity: 0.3; transform: scaleX(0.8); }
+  50% { opacity: 1; transform: scaleX(1); }
+}
+.waveArrow { font-size: 1.25rem; animation: arrowAnim 1.5s ease-in-out infinite; }
+@keyframes arrowAnim { 0%,100% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
+
+/* ── Trust bar ── */
+.trustBar {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  padding: 20px 0;
+}
+.trustItems {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+.trustDot { width: 4px; height: 4px; border-radius: 50%; background: var(--border-hover); }
+
+/* ── Steps ── */
+.steps {
+  display: flex;
+  gap: 0;
+  position: relative;
+}
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0.3;
+}
+.step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0 24px;
+  position: relative;
+}
+.stepNum {
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+.stepIcon {
+  font-size: 2.5rem;
+  width: 64px; height: 64px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  z-index: 1;
+}
+.stepTitle { font-size: 1.0625rem; font-weight: 700; margin-bottom: 10px; }
+.stepDesc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
+.stepArrow {
+  position: absolute;
+  top: 50px;
+  right: -16px;
+  font-size: 1.25rem;
+  color: var(--text-faint);
+  z-index: 2;
+}
+
+/* ── Features preview ── */
+.featuresSection { background: var(--surface); }
+.featureIcon { font-size: 2rem; margin-bottom: 16px; }
+.featureTitle { font-size: 1.125rem; font-weight: 700; margin-bottom: 8px; }
+.featureDesc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+.featuresCta { margin-top: 48px; display: flex; justify-content: center; }
+
+/* ── Pricing preview ── */
+.pricingPreview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.planCard { position: relative; }
+.planCardFeatured {
+  border-color: var(--primary);
+  box-shadow: 0 0 40px var(--primary-glow);
+  background: linear-gradient(135deg, rgba(124,58,237,0.08), var(--surface));
+}
+.popularBadge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.planName { font-size: 0.875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.planPrice { font-size: 2.5rem; font-weight: 900; letter-spacing: -0.03em; }
+.planPeriod { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 0; }
+
+/* ── CTA Banner ── */
+.ctaBanner {
+  position: relative;
+  padding: 96px 0;
+  background: linear-gradient(180deg, transparent, rgba(124,58,237,0.06));
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+}
+.ctaOrb {
+  position: absolute;
+  width: 600px; height: 400px;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(ellipse, rgba(124,58,237,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+.ctaContent { text-align: center; position: relative; z-index: 1; }
+.ctaTitle { font-size: clamp(1.75rem, 4vw, 3rem); font-weight: 900; margin-bottom: 16px; letter-spacing: -0.02em; }
+.ctaSub { font-size: 1.0625rem; color: var(--text-muted); margin-bottom: 40px; }
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .hero .container { grid-template-columns: 1fr; gap: 48px; }
+  .heroVisual { order: -1; }
+  .pricingPreview { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+}
+@media (max-width: 768px) {
+  .steps { flex-direction: column; }
+  .steps::before { display: none; }
+  .stepArrow { display: none; }
+  .heroCtas { flex-direction: column; }
+  .heroStats { flex-direction: column; gap: 8px; }
+  .heroVisual { flex-direction: column; }
+  .signalWaves { flex-direction: row; transform: rotate(90deg); margin: 12px 0; }
+}

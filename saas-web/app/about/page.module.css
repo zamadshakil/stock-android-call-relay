@@ -1,0 +1,178 @@
+.page { min-height: 100vh; }
+
+/* Hero */
+.hero {
+  position: relative;
+  padding: 80px 0 64px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+.heroOrb {
+  position: absolute;
+  width: 600px; height: 400px;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  background: radial-gradient(ellipse, rgba(6,182,212,0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+.heroContent { position: relative; z-index: 1; }
+.heroTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 12px 0 20px;
+}
+.heroSub {
+  font-size: 1.125rem;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Mission */
+.missionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+.missionText {}
+.missionPara {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin: 16px 0;
+}
+.missionStats {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 32px;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+.stat { text-align: center; flex: 1; }
+.statNum { display: block; font-size: 2rem; font-weight: 900; color: var(--primary); letter-spacing: -0.03em; }
+.statLabel { font-size: 0.75rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+.statDivider { width: 1px; height: 40px; background: var(--border); }
+
+/* Problem box */
+.missionVisual { display: flex; justify-content: center; }
+.problemBox {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  padding: 32px;
+  width: 100%;
+  max-width: 340px;
+}
+.problemLabel {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--danger);
+  margin-bottom: 16px;
+}
+.problemItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.problemArrow {
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--text-faint);
+  margin: 12px 0;
+}
+.solutionBox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(6,182,212,0.1));
+  border: 1px solid rgba(124,58,237,0.3);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+}
+.solutionText { font-weight: 600; }
+
+/* Tech */
+.techSection { background: var(--surface); }
+.techGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.techIcon { font-size: 2rem; margin-bottom: 12px; }
+.techName { font-size: 1rem; font-weight: 700; margin-bottom: 6px; }
+.techDesc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.5; }
+
+/* Privacy */
+.privacyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.privacyList { display: flex; flex-direction: column; gap: 12px; }
+.privacyItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9375rem;
+  transition: border-color var(--t-fast);
+}
+.privacyItem:hover { border-color: var(--border-hover); }
+.privacyIcon { font-size: 1.25rem; flex-shrink: 0; }
+
+/* Limitations */
+.limitsSection { background: var(--surface); }
+.limitsList { display: flex; flex-direction: column; gap: 12px; }
+.limitItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 24px;
+  background: rgba(239,68,68,0.05);
+  border: 1px solid rgba(239,68,68,0.15);
+  border-radius: var(--radius);
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+}
+.limitIcon { font-size: 1.25rem; flex-shrink: 0; }
+
+/* Contact */
+.contactSection {
+  padding: 96px 0;
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, transparent, rgba(124,58,237,0.05));
+}
+.contactContent { text-align: center; }
+.contactTitle { font-size: clamp(1.75rem, 4vw, 2.5rem); font-weight: 900; margin-bottom: 12px; letter-spacing: -0.02em; }
+.contactSub { font-size: 1.0625rem; color: var(--text-muted); margin-bottom: 32px; }
+.contactNote { margin-top: 20px; font-size: 0.875rem; color: var(--text-faint); }
+.contactLink { color: var(--primary); }
+.contactLink:hover { text-decoration: underline; }
+
+@media (max-width: 1024px) {
+  .missionGrid, .privacyGrid { grid-template-columns: 1fr; gap: 48px; }
+  .missionVisual { display: none; }
+  .techGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .techGrid { grid-template-columns: 1fr; }
+  .missionStats { flex-direction: column; gap: 16px; }
+  .statDivider { width: 40px; height: 1px; }
+}

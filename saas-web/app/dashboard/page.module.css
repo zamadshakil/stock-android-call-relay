@@ -1,0 +1,146 @@
+.dashPage {
+  display: flex;
+  min-height: calc(100vh - var(--nav-h));
+  background: var(--bg);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px 20px;
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  overflow-y: auto;
+}
+.sidebarTop { display: flex; flex-direction: column; gap: 32px; }
+.sidebarLogo {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: -0.02em;
+}
+.sidebarLogo span { color: var(--primary); }
+.sidebarNav { display: flex; flex-direction: column; gap: 4px; }
+.sidebarLink {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all var(--t-fast);
+}
+.sidebarLink:hover { background: var(--surface-hover); color: var(--text); }
+.sidebarIcon { font-size: 1rem; width: 20px; text-align: center; }
+.sidebarBottom { padding-top: 20px; border-top: 1px solid var(--border); }
+.sidebarPlan { font-size: 0.8rem; color: var(--text-faint); margin-top: 6px; }
+
+/* Main */
+.dashMain {
+  flex: 1;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  overflow-y: auto;
+}
+
+/* Panel */
+.panel {}
+.panelTitle {
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+.panelSub { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px; }
+
+/* Stat cards */
+.statCards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.statCard { display: flex; flex-direction: column; gap: 8px; }
+.statLabel { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.statValue { font-size: 2rem; font-weight: 900; letter-spacing: -0.03em; }
+.statSub { font-size: 0.8rem; color: var(--text-faint); }
+
+/* Download cards */
+.downloadGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.downloadCard { display: flex; flex-direction: column; gap: 20px; }
+
+.downloadIconWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  background: var(--surface-2);
+  border-radius: var(--radius);
+}
+.androidIcon { width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; background: rgba(61,220,132,0.12); border-radius: var(--radius); }
+.iphoneIcon { width: 72px; height: 72px; display: flex; align-items: center; justify-content: center; background: rgba(0,122,255,0.12); border-radius: var(--radius); }
+
+.downloadInfo {}
+.downloadTitle { font-size: 1.125rem; font-weight: 700; margin-bottom: 8px; }
+.downloadDesc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; }
+.downloadMeta { display: flex; gap: 8px; font-size: 0.75rem; color: var(--text-faint); }
+
+.setupDetails {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+.setupDetails summary { cursor: pointer; font-weight: 500; color: var(--text-muted); }
+.setupDetails summary:hover { color: var(--text); }
+.setupList {
+  list-style: decimal;
+  margin: 12px 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-faint);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* Billing */
+.billingCard { display: flex; flex-direction: column; gap: 24px; }
+.billingInfo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.billingPlan { font-size: 1.25rem; font-weight: 700; margin: 4px 0; }
+.billingPrice { font-size: 0.9rem; color: var(--text-muted); }
+.billingDate { font-size: 1rem; font-weight: 600; margin-top: 4px; }
+.billingActions { display: flex; gap: 12px; padding-top: 20px; border-top: 1px solid var(--border); }
+
+/* Account */
+.accountCard { display: flex; flex-direction: column; gap: 24px; }
+.accountRow { display: flex; align-items: center; gap: 16px; }
+.accountAvatar {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem; font-weight: 700; color: #fff;
+}
+.accountName { font-size: 1.125rem; font-weight: 700; }
+.accountEmail { font-size: 0.875rem; color: var(--text-muted); }
+.accountActions { display: flex; gap: 12px; padding-top: 20px; border-top: 1px solid var(--border); }
+
+@media (max-width: 1024px) {
+  .sidebar { display: none; }
+  .dashMain { padding: 32px 24px; }
+  .statCards { grid-template-columns: 1fr; }
+  .downloadGrid { grid-template-columns: 1fr; }
+  .billingInfo { grid-template-columns: 1fr; }
+}
